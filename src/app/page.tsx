@@ -150,7 +150,7 @@ export default function HomePage() {
             </p>
             <div className="flex gap-3 justify-center flex-wrap">
               <a
-                href="mailto:saulyue@example.com"
+                href="mailto:saulcsy@gmail.com"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium bg-[var(--accent)] text-[var(--accent-text)] hover:opacity-90 hover:-translate-y-0.5 transition-all"
               >
                 ✉ 发邮件
