@@ -9,12 +9,20 @@
 | 资源 | 值 |
 |------|-----|
 | 主站 | https://saulyue.site |
-| 服务器 | `ssh ntc`（146.56.250.72，Debian 13，2C/2G + 2G Swap） |
-| 主站部署路径 | `/data/saulyue-hub` |
-| 运维面板 | https://admin.saulyue.site（Dockge） |
+| 南京服务器 | `ssh ntc`（146.56.250.72，Debian 13，2C/2G + 2G Swap）— 前端 + 国内业务 |
+| 东京服务器 | `ssh tc`（43.163.205.120，CentOS 7，2C/2G）— 纯后端 API + 海外直连 |
+| 运维面板 | https://admin.saulyue.site（Dockge，在 ntc） |
 | COS 桶 | `yue-1252705137`（ap-nanjing），前端静态资源托管 |
 | CI/CD | push → GitHub Actions build → scp 产物到服务器 |
 | GitHub SSH | Host 别名 `github-saulyue`（ed25519 密钥） |
+
+### 服务器分工
+
+```
+ntc（南京）— 面向用户出页面、国内业务
+tc（东京）— 纯后端 API、调用海外服务（OpenAI/GitHub）、代理中转
+两者延迟 ~60ms，服务互调无压力
+```
 
 ## 技术栈
 
