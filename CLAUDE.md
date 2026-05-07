@@ -1,70 +1,59 @@
 # CLAUDE.md — saulyue.site 个人微服务主站
 
-## 项目概述
+## 架构定位
 
-个人微服务 Hub，Next.js 15 App Router 架构，作为 BFF 入口承载主页、博客、API 和子服务路由。
+个人微服务 Hub。主站作为 BFF 入口，子服务通过子域名独立部署。
 
-- 线上地址：https://saulyue.site
-- 仓库：`saulyue/saulyue.github.io`（SSH remote: `git@github-saulyue:saulyue/saulyue.github.io.git`）
-- 服务器：`ssh ntc`（146.56.250.72，Debian 13，Docker 26.1）
-- 部署路径：`/data/saulyue-hub`
-- CI/CD：push main → GitHub Actions → SSH 自动 `docker compose up -d --build`
+## 基础设施
+
+| 资源 | 值 |
+|------|-----|
+| 主站 | https://saulyue.site |
+| 服务器 | `ssh ntc`（146.56.250.72，Debian 13） |
+| 主站部署路径 | `/data/saulyue-hub` |
+| 运维面板 | https://admin.saulyue.site（Dockge） |
+| CI/CD | push main → GitHub Actions → 自动部署 |
+| GitHub SSH | Host 别名 `github-saulyue` |
 
 ## 技术栈
 
-- **框架**：Next.js 16.2 + TypeScript + Tailwind CSS 4
-- **内容**：MDX（next-mdx-remote）+ YAML（js-yaml）
-- **部署**：Docker multi-stage（node:22-alpine standalone）+ Nginx 反代 + Let's Encrypt HTTPS
-- **包管理**：pnpm
+主站：Next.js 16 + TypeScript + Tailwind 4 + pnpm
+部署：Docker standalone + Nginx 反代 + Let's Encrypt
+内容：MDX 文章 + YAML 数据（Git 管理，无数据库）
 
 ## 目录结构
 
 ```
-src/app/           → 路由（page.tsx, blog/, api/）
-src/components/    → 8 个 UI 组件（Navbar, Hero, Stats, SectionHead, SkillCloud, Timeline, ProjectCard, Footer）
-src/lib/           → 工具函数（data.ts 读 YAML, mdx.ts 解析文章）
-content/articles/  → .mdx 文章文件
-content/data/      → skills.yaml, experiences.yaml, projects.yaml
-docs/              → 分层架构文档（infra/platform/services/changelog）
+src/app/           → 路由
+src/components/    → UI 组件
+src/lib/           → 工具函数（data.ts, mdx.ts）
+content/           → 文章(.mdx) + 数据(.yaml)
+docs/              → 架构文档
 ```
 
-## 常用命令
+## 当前服务
 
-```bash
-pnpm dev              # 本地开发
-pnpm build            # 构建（验证类型 + SSG）
-ssh ntc "cd /data/saulyue-hub && git pull && docker compose up -d --build"  # 手动部署
+| 端口 | 容器 | 域名 |
+|------|------|------|
+| 3000 | saulyue-hub | saulyue.site |
+| 3002 | agent-node | agent.saulyue.site |
+| 5001 | dockge | admin.saulyue.site |
+
+下一个可用端口：3003、4000、5002
+
+## 子服务接入（核心流程）
+
+```
+Dockerfile + compose → 打包上传 /data/<name>/ → docker compose up → Nginx 反代 → certbot HTTPS
 ```
 
-## 子服务接入
+约束：
+- 子服务不内置 Nginx，只暴露端口
+- ntc 不能访问 GitHub，代码用 scp 上传
+- 详细步骤见 `docs/services.md`
 
-新项目接入完整流程（详见 `docs/services.md`）：
+## 约定
 
-1. 写 Dockerfile（standalone 模式，不内置 Nginx）
-2. 写 docker-compose.yml（映射到未用端口）
-3. 本地 `tar` 打包 → `scp` 到 ntc 服务器 `/data/<项目名>/`
-4. `ssh ntc "cd /data/<项目名> && docker compose up -d --build"`
-5. 服务器加 Nginx 配置 → `certbot --nginx -d <项目名>.saulyue.site`
-6. 主站 Navbar 加链接（可选）
-
-> ntc 服务器 GitHub 网络不通，**禁止用 git clone**，统一用本地打包上传。
-
-### 当前运行的服务
-
-| 端口 | 服务 | 域名 | 容器名 |
-|------|------|------|--------|
-| 3000 | saulyue-hub (主站) | saulyue.site | `saulyue-hub` |
-| 3002 | agent-node | agent.saulyue.site | `agent-node` |
-| 5001 | Dockge (运维面板) | admin.saulyue.site | `dockge` |
-
-### 端口分配
-
-下一个可用：3003、4000、5002
-
-## 关键约定
-
-- 数据层全部 YAML/MDX in Git，不用数据库
-- 主题：CSS 变量 + `data-theme` 属性，暗色默认
-- 组件全部 Server Component（除 Navbar 是 client）
-- 文章发布：`content/articles/xxx.mdx` + push 即生效
-- 详细架构文档见 `docs/architecture.md`
+- 暗色主题默认，CSS 变量 + `data-theme` 切换
+- 组件 Server-first，仅 Navbar 是 client
+- 文章/数据：改文件 + push 即生效
