@@ -57,3 +57,11 @@ Dockerfile + compose → 打包上传 /data/<name>/ → docker compose up → Ng
 - 暗色主题默认，CSS 变量 + `data-theme` 切换
 - 组件 Server-first，仅 Navbar 是 client
 - 文章/数据：改文件 + push 即生效
+
+## 按需加载规则
+
+| 触发场景 | 读取文件 |
+|---------|---------|
+| 接入新服务、部署、Docker、Nginx、HTTPS、子域名 | `docs/services.md` |
+| 服务器初始化、重装系统、环境搭建 | `docs/infra.md` |
+| 框架升级、新增组件、修改主题 | `docs/platform.md` |
