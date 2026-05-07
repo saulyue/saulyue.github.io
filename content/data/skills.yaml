@@ -1,0 +1,37 @@
+# 技能数据
+
+frontend:
+  label: Frontend
+  items:
+    - React
+    - Vue 3
+    - TypeScript
+    - Vite 5
+    - Next.js
+    - Umi Max
+    - CSS / Sass
+    - Webpack
+
+backend:
+  label: Backend & Data
+  items:
+    - Node.js
+    - Nest.js
+    - Go
+    - tRPC-Go
+    - gRPC
+    - MySQL
+    - Redis
+    - Kafka
+
+toolchain:
+  label: Toolchain & AI
+  items:
+    - Docker
+    - CI/CD
+    - Linux
+    - Nginx
+    - Claude Code
+    - MCP Server
+    - COS
+    - Git

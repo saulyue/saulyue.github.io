@@ -1,0 +1,25 @@
+# 项目数据
+
+- name: 云市场前端体系
+  description: 33 个 MPA 入口、82+ 通用组件，支撑腾讯云市场全量前端业务。
+  techs: [React, Vite 5, TypeScript]
+  url: ""
+  image: ""
+
+- name: CI/CD 构建极速化
+  description: 构建从 5m13s → 12s，-96%；Docker 镜像 1.33GB → 691MB，-48%。
+  techs: [Docker, CODING CI, pnpm]
+  url: ""
+  image: ""
+
+- name: MCP Server 集成
+  description: 腾讯云产品 MCP Server 实现，接入 Claude Code 实现 AI 辅助研发闭环。
+  techs: [TypeScript, MCP, Claude API]
+  url: ""
+  image: ""
+
+- name: isv-console-tea2
+  description: 服务商控制台 Monorepo，4 子系统 33 路由，完整交付 ISV 管理业务。
+  techs: [Vue 3, Tea SDK, tRPC-Go]
+  url: ""
+  image: ""

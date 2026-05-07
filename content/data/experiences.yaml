@@ -1,0 +1,24 @@
+# 工作经历
+
+- company: 腾讯云
+  company_en: Tencent Cloud
+  role: 前端开发工程师 · 云市场 / 云应用
+  period: "2021.09 — 至今"
+  description: >
+    主导云市场前端体系建设，覆盖 33 个 MPA 入口页、82+ 通用组件库；推动
+    CI/CD 构建从 5m13s 压缩至 12s（-96%）、Docker 镜像瘦身 -48%、首屏资源体积
+    -90% 等工程优化。积极探索 AI 辅助开发工作流，年化节省 104 人时。
+
+- company: 丰巢科技
+  company_en: Hive Box
+  role: 前端开发工程师
+  period: "2020.12 — 2021.09"
+  description: >
+    参与丰巢柜业务中台前端开发，负责快递柜管理、订单系统等核心模块的功能迭代与性能优化。
+
+- company: 烽火星空
+  company_en: FiberHome
+  role: 前端组长
+  period: "2017.07 — 2020.12"
+  description: >
+    从零搭建前端团队，主导多个 ToB 产品的前端架构设计与全周期交付，负责规范制定、组件库建设及团队管理。

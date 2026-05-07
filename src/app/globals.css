@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* ─── Dark Theme (Default) ─── */
+:root {
+  --bg: #080810;
+  --bg-alt: #0c0c1a;
+  --bg-card: #12121f;
+  --border: rgba(180, 244, 56, 0.08);
+  --t-primary: #f0f0f0;
+  --t-secondary: #a0a0b0;
+  --t-dim: #60607a;
+  --accent: #b4f438;
+  --glow: rgba(180, 244, 56, 0.15);
+}
+
+/* ─── Light Theme ─── */
+[data-theme="light"] {
+  --bg: #f5f3ee;
+  --bg-alt: #eae7e0;
+  --bg-card: #ffffff;
+  --border: rgba(77, 124, 0, 0.12);
+  --t-primary: #1a1a2e;
+  --t-secondary: #4a4a5a;
+  --t-dim: #8a8a9a;
+  --accent: #4d7c00;
+  --glow: rgba(77, 124, 0, 0.1);
+}
+
+/* ─── Tailwind CSS 4 Theme Tokens ─── */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-bg-card: var(--bg-card);
+  --color-border: var(--border);
+  --color-t-primary: var(--t-primary);
+  --color-t-secondary: var(--t-secondary);
+  --color-t-dim: var(--t-dim);
+  --color-accent: var(--accent);
+  --color-glow: var(--glow);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ─── Base Styles ─── */
+body {
+  background: var(--bg);
+  color: var(--t-primary);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+/* ─── Dot Grid Background Texture ─── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--accent) 0.5px, transparent 0.5px);
+  background-size: 32px 32px;
+  opacity: 0.04;
+}
+
+[data-theme="light"] body::before {
+  opacity: 0.06;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Selection ─── */
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ─── Focus ─── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ─── Scroll Reveal Animation ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Stagger Children ─── */
+.reveal-stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger > .reveal:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger > .reveal:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger > .reveal:nth-child(6) { transition-delay: 400ms; }
+.reveal-stagger > .reveal:nth-child(7) { transition-delay: 480ms; }
+.reveal-stagger > .reveal:nth-child(8) { transition-delay: 560ms; }
+
+/* ─── Glow Hover Effect ─── */
+.glow-hover {
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 20px var(--glow), 0 0 40px var(--glow);
+}
+
+/* ─── Fade Up Animation ─── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-up-delay-1 {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-delay-3 {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  opacity: 0;
+}
