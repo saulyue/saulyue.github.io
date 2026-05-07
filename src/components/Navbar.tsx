@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/#projects", label: "项目" },
   { href: "/blog", label: "博客" },
   { href: "https://agent.saulyue.site", label: "Agent" },
+  { href: "https://med.saulyue.site", label: "Medicine" },
   { href: "/#contact", label: "联系" },
 ];
 
