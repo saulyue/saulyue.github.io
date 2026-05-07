@@ -38,13 +38,28 @@ ssh ntc "cd /data/saulyue-hub && git pull && docker compose up -d --build"  # �
 
 ## 子服务接入
 
-新项目三步法：DNS A 记录 → Docker 容器 → Nginx server 块 + certbot
+新项目接入完整流程（详见 `docs/services.md`）：
 
-| 端口 | 服务 | 域名 |
-|------|------|------|
-| 3000 | saulyue-hub | saulyue.site |
-| 待分配 | superclaw | chat.saulyue.site |
-| 待分配 | objectForm | form.saulyue.site |
+1. 写 Dockerfile（standalone 模式，不内置 Nginx）
+2. 写 docker-compose.yml（映射到未用端口）
+3. 本地 `tar` 打包 → `scp` 到 ntc 服务器 `/data/<项目名>/`
+4. `ssh ntc "cd /data/<项目名> && docker compose up -d --build"`
+5. 服务器加 Nginx 配置 → `certbot --nginx -d <项目名>.saulyue.site`
+6. 主站 Navbar 加链接（可选）
+
+> ntc 服务器 GitHub 网络不通，**禁止用 git clone**，统一用本地打包上传。
+
+### 当前运行的服务
+
+| 端口 | 服务 | 域名 | 容器名 |
+|------|------|------|--------|
+| 3000 | saulyue-hub (主站) | saulyue.site | `saulyue-hub` |
+| 3002 | agent-node | agent.saulyue.site | `agent-node` |
+| 5001 | Dockge (运维面板) | admin.saulyue.site | `dockge` |
+
+### 端口分配
+
+下一个可用：3003、4000、5002
 
 ## 关键约定
 

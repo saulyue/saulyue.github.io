@@ -1,5 +1,25 @@
 # 变更日志
 
+## 2026-05-07 — v1.1 子服务接入 + 运维面板
+
+### 新增
+
+- [x] **agent-node** 接入（agent.saulyue.site，端口 3002）
+- [x] **Dockge** 容器管理面板（admin.saulyue.site，端口 5001）
+- [x] 主站导航加 Agent 链接
+- [x] 博客路由修复（`#blog` → `/blog`）
+- [x] services.md 补充完整子服务接入实操步骤（6步闭环）
+
+### 踩坑
+
+| 问题 | 原因 | 解决 |
+|------|------|------|
+| ntc 服务器 git clone GitHub 失败 | 网络不通 | 本地 tar + scp 上传 |
+| Dockge 容器 Created 但没启动 | docker run 后未自动 start | `docker start dockge` |
+| agent-node Dockerfile 内网镜像 | 原用腾讯内网 csighub 镜像 | 改用公共 node:22-alpine |
+
+---
+
 ## 2026-05-07 — v1.0 初始化
 
 ### 完成事项
