@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 
 const navLinks = [
-  { href: "#about", label: "关于" },
-  { href: "#skills", label: "技能" },
-  { href: "#experience", label: "经历" },
-  { href: "#projects", label: "项目" },
-  { href: "#blog", label: "博客" },
-  { href: "#contact", label: "联系" },
+  { href: "/#about", label: "关于" },
+  { href: "/#skills", label: "技能" },
+  { href: "/#experience", label: "经历" },
+  { href: "/#projects", label: "项目" },
+  { href: "/blog", label: "博客" },
+  { href: "/#contact", label: "联系" },
 ];
 
 export default function Navbar() {
@@ -34,7 +34,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         {/* Logo */}
-        <a href="#" className="font-serif text-xl font-bold tracking-tight text-[var(--t-primary)]">
+        <a href="/" className="font-serif text-xl font-bold tracking-tight text-[var(--t-primary)]">
           乐祥孚<span className="text-[var(--accent)]">.</span>
         </a>
 
