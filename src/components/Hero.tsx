@@ -21,7 +21,7 @@ export default function Hero() {
 
         {/* Tagline */}
         <p className="mt-6 max-w-lg text-lg leading-relaxed text-[var(--t-secondary)] animate-fade-up-delay-2">
-          5 年前端工程经验，专注 AI 驱动的研发效能提升。
+          9 年前端工程经验，专注 AI 驱动的研发效能提升。
           <br />
           构建高性能 Web 应用与开发者工具。
         </p>
