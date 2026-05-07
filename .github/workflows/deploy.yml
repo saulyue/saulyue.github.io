@@ -3,6 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -10,13 +11,63 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy via SSH
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # ── 构建 ──
+      - name: Build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      # ── 打包 standalone 产物 ──
+      - name: Package
+        run: |
+          tar -czf hub-dist.tar.gz \
+            .next/standalone \
+            .next/static \
+            public \
+            content
+
+      # ── 上传到服务器 ──
+      - name: Upload
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 146.56.250.72
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "hub-dist.tar.gz"
+          target: "/tmp/"
+
+      # ── 解压并重启 ──
+      - name: Restart
         uses: appleboy/ssh-action@v1
         with:
           host: 146.56.250.72
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            mkdir -p /data/saulyue-hub
             cd /data/saulyue-hub
-            git pull origin main
-            docker compose up -d --build
+            rm -rf .next public content
+            tar -xzf /tmp/hub-dist.tar.gz
+            rm -f /tmp/hub-dist.tar.gz
+            # 用 standalone 模式直接 node 运行，不需要 Docker
+            docker stop saulyue-hub 2>/dev/null || true
+            docker rm saulyue-hub 2>/dev/null || true
+            docker run -d \
+              --name saulyue-hub \
+              --restart unless-stopped \
+              -p 3000:3000 \
+              -v /data/saulyue-hub/.next/standalone:/app \
+              -v /data/saulyue-hub/.next/static:/app/.next/static \
+              -v /data/saulyue-hub/public:/app/public \
+              -v /data/saulyue-hub/content:/app/content \
+              -w /app \
+              --memory=256m \
+              node:22-alpine node server.js
+            echo "Hub deployed!"
