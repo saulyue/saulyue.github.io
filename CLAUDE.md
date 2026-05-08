@@ -11,6 +11,7 @@
 | 主站 | https://saulyue.site |
 | 南京服务器 | `ssh ntc`（146.56.250.72，Debian 13，2C/2G + 2G Swap）— 前端 + 国内业务 |
 | 东京服务器 | `ssh tc`（43.163.205.120，CentOS 7，2C/2G）— 纯后端 API + 海外直连 |
+| MySQL | `sh-cynosdbmysql-grp-hkebiel2.sql.tencentcdb.com:21397`（上海，MySQL 8.0，到期 2028） |
 | 运维面板 | https://admin.saulyue.site（Dockge，在 ntc） |
 | COS 桶 | `yue-1252705137`（ap-nanjing），前端静态资源托管 |
 | CI/CD | push → GitHub Actions build → scp 产物到服务器 |
@@ -87,6 +88,8 @@ push → Actions build → scp 产物到 /data/<name>/ → docker compose up（v
 - 组件 Server-first，仅 Navbar 是 client
 - 文章/数据：改文件 + push 即生效
 - Dockge 管理所有容器（compose 文件放 /data/ 下）
+- 数据库密码通过 GitHub Secrets → CI 写入服务器 .env，代码中不硬编码
+- Next.js standalone 部署注意：工作目录必须是 `.next/standalone/`，static 需挂载到 `.next/static`
 
 ## 按需加载规则
 
